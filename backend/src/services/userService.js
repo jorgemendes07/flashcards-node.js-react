@@ -10,3 +10,16 @@ export async function index() {
         },
     });
 }
+
+export async function show(id) {
+    return prisma.user.findUnique({
+        where: { id: Number(id) }
+    })
+}
+
+export async function create(data) {
+    return prisma.user.create({
+        data,
+    })
+
+}
