@@ -30,3 +30,9 @@ export async function update(id, data) {
         data,
     })
 }
+
+export async function remove(id) {
+    return prisma.user.delete({
+        where: {id: Number(id)}
+    })
+}
