@@ -23,3 +23,10 @@ export async function create(data) {
     })
 
 }
+
+export async function update(id, data) {
+    return prisma.user.update({
+        where: { id: Number(id) },
+        data,
+    })
+}

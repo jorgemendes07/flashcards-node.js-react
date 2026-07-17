@@ -37,8 +37,28 @@ export async function create(req, res) {
         const user = await userService.create({ email, password });
         res.status(201).json(user)
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: "Erro ao criar usuário." })
     }
 
     res.status(201).json(user)
+}
+
+export async function update(req, res) {
+    try {
+        const { id } = req.params;
+        const { email, password } = req.body;
+        
+        const user = await userService.show(id);
+
+        if (!user) {
+            return res.status(404).json({ error: "Usuário não encontrado." });
+        }
+
+        const updatedUser = await userService.update(id, { email, password });
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erro ao atualizar usuário." })
+    }
 }
