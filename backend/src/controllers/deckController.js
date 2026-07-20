@@ -91,6 +91,30 @@ export async function update(req, res) {
         res.status(200).json(updatedDeck);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Erro ao atualizar deck."});
+        res.status(500).json({ error: "Erro ao atualizar deck." });
+    }
+}
+
+export async function remove (req, res) {
+    try {
+        const { id } = req.params;
+        const { userId } =  req.body;
+
+        if (!userId) {
+            return res.status(400).json({ error: "O campo userId é obrigatório." })
+        }
+
+        const deck = await deckService.show(id)
+
+        if (!deck || deck.userId !== Number(userId)) {
+            return res.status(404).json({ error: "Deck não encontrado" })
+        }
+
+        await deckService.remove(id);
+        res.status(204).send()
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erro ao remover deck." })
     }
 }

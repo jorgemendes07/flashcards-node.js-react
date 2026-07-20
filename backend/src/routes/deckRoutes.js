@@ -7,5 +7,6 @@ routes.get("/", deckController.index);
 routes.get("/:id", deckController.show);
 routes.post("/", deckController.create);
 routes.put("/:id", deckController.update);
+routes.delete("/:id", deckController.remove);
 
 export default routes;
