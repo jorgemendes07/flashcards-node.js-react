@@ -33,7 +33,6 @@ export async function show(req, res) {
         }
 
         res.json(deck);
-
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Erro ao buscar deck" });
@@ -61,4 +60,37 @@ export async function create(req, res) {
         return res.status(500).json({ error: "Erro ao buscar deck" });
     }
     
+}
+
+export async function update(req, res) {
+    try {
+        const { id } = req.params;
+        const { name, userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ error: "o campo userId é obrigatóio." });
+        }
+
+        const user = await userService.show(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "Usuário não encontrado." });
+        }
+
+        const deck = await deckService.show(id);
+
+        if (!deck || deck.userId !== Number(userId)) {
+            return res.status(404).json({ error: "Deck não encontrado." });
+        }
+
+        if (!name) {
+            return res.status(400).json({ error: "O campo name é obrigatório."});
+        }
+
+        const updatedDeck = await deckService.update(id, { name });
+        res.status(200).json(updatedDeck);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erro ao atualizar deck."});
+    }
 }

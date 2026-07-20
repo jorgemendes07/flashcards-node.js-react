@@ -17,3 +17,10 @@ export async function create(data) {
         data,
     })
 }
+
+export async function update(id, data) {
+    return prisma.deck.update({
+        where: { id: Number(id)},
+        data,
+    })
+}

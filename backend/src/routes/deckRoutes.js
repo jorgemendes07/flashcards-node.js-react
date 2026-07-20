@@ -6,5 +6,6 @@ const routes = Router();
 routes.get("/", deckController.index);
 routes.get("/:id", deckController.show);
 routes.post("/", deckController.create);
+routes.put("/:id", deckController.update);
 
 export default routes;
