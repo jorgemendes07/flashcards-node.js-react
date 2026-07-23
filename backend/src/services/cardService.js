@@ -5,3 +5,9 @@ export async function index(deckId) {
         where: { deckId: Number(deckId) }
     });
 }
+
+export async function show(id) {
+    return prisma.card.findUnique({
+        where: { id: Number(id) }
+    });
+}
