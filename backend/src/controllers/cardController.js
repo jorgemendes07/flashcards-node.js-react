@@ -3,10 +3,16 @@ import * as deckService from "../services/deckService.js";
 
 export async function index (req, res) {
     try {
-        const { deckId } = req.query;
+        const { deckId, userId } = req.query;
 
-        if (!deckId) {
-            return res.status(400).json({ error: "O parâmetro deckId é obrigatório." });
+        if (!deckId || !userId) {
+            return res.status(400).json({ error: "Os parâmetros deckId e userId são obrigatórios." });
+        }
+
+        const deck = await deckService.show(deckId);
+
+        if (!deck || deck.userId !== Number(userId)) {
+            return res.status(404).json({ error: "Deck não encontrado." })
         }
 
         const cards = await cardService.index(deckId);
@@ -23,7 +29,7 @@ export async function show(req, res) {
         const { deckId, userId } = req.query;
 
         if(!deckId || !userId) {
-            return res.status(400).json({ error: "O parâmetro deckId é obrigatório." });
+            return res.status(400).json({ error: "Os parâmetros deckId e userId são obrigatórios." });
         }
 
         const deck = await deckService.show(deckId);
