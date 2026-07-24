@@ -11,3 +11,9 @@ export async function show(id) {
         where: { id: Number(id) }
     });
 }
+
+export async function create(data) {
+    return prisma.card.create({
+        data
+    })
+}

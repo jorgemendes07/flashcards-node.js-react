@@ -50,3 +50,26 @@ export async function show(req, res) {
         res.status(500).json({ error: "Erro ao buscar card." })
     }
 }
+
+export async function create (req, res) {
+    try {
+        const { front, back, difficulty, deckId, userId } = req.body;
+
+        if(!front || !back || !deckId || !userId) {
+            return res.status(400).json({ error: "Os campos front, back, deckId e userId são obrigatórios." });
+        }
+        
+        const deck = await deckService.show(deckId);
+
+        if (!deck || deck.userId !== Number(userId)) {
+            return res.status(404).json({ error: "Deck não encontrado." });
+        }
+
+        const card = await cardService.create({ front, back, difficulty, deckId: Number(deckId) });
+        res.status(201).json(card)
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Erro ao criar card." });
+    }
+}
