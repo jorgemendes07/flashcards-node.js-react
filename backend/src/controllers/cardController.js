@@ -12,7 +12,7 @@ export async function index (req, res) {
         const deck = await deckService.show(deckId);
 
         if (!deck || deck.userId !== Number(userId)) {
-            return res.status(404).json({ error: "Deck não encontrado." })
+            return res.status(404).json({ error: "Deck não encontrado." });
         }
 
         const cards = await cardService.index(deckId);
@@ -35,7 +35,7 @@ export async function show(req, res) {
         const deck = await deckService.show(deckId);
 
         if (!deck || deck.userId !== Number(userId)) {
-            return res.status(404).json({ error: "Deck não encontrado." })
+            return res.status(404).json({ error: "Deck não encontrado." });
         }
 
         const card = await cardService.show(id);
@@ -47,7 +47,7 @@ export async function show(req, res) {
         res.json(card)
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Erro ao buscar card." })
+        res.status(500).json({ error: "Erro ao buscar card." });
     }
 }
 
@@ -66,10 +66,41 @@ export async function create (req, res) {
         }
 
         const card = await cardService.create({ front, back, difficulty, deckId: Number(deckId) });
-        res.status(201).json(card)
+        res.status(201).json(card);
 
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Erro ao criar card." });
+    }
+}
+
+export async function update(req, res) {
+
+    try {
+        const { id } = req.params;
+        const { front, back, difficulty, deckId, userId } = req.body;
+
+        if(!front || !back || !deckId || !userId) {
+            return res.status(400).json({ error: "Os campos front, back, deckId e userId são obrigatórios."});
+        }
+
+        const deck = await deckService.show(deckId);
+
+        if (!deck || deck.userId !== Number(userId)) {
+            return res.status(404).json({ error: "Deck não encontrado" });
+        }
+
+        const card = await cardService.show(id);
+
+        if (!card || card.deckId !== Number(deckId)) {
+            return res.status(404).json({ error: "Card não encontrado." });
+        }
+
+        const updatedCard = await cardService.update(id, {front, back, difficulty });
+        res.json(updatedCard);
+        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Erro ao editar card." });
     }
 }
