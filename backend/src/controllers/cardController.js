@@ -104,3 +104,32 @@ export async function update(req, res) {
         return res.status(500).json({ error: "Erro ao editar card." });
     }
 }
+
+export async function remove(req, res) {
+    try {
+    const { id } = req.params;
+    const { deckId, userId } = req.body;
+
+    if (!deckId || !userId) {
+        return res.status(400).json({ error: "Os campos deckId e userId são obrigatórios." });
+    }
+
+    const deck = await deckService.show(deckId);
+
+    if (!deck || deck.userId !== Number(userId)) {
+        return res.status(404).json({ error: "Deck não encontrado." });
+    }
+
+    const card = await cardService.show(id);
+
+    if (!card || card.deckId !== Number(deckId)) {
+        return res.status(404).json({ error: "Card não encontrado." });
+    }
+
+    await cardService.remove(id);
+    res.status(204).send();
+    } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao remover card." });
+    }
+}

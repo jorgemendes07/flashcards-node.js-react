@@ -7,5 +7,6 @@ routes.get("/", cardController.index);
 routes.get("/:id", cardController.show);
 routes.post("/", cardController.create);
 routes.put("/:id", cardController.update);
+routes.delete("/:id", cardController.remove);
 
 export default routes;
