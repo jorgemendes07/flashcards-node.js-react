@@ -4,13 +4,12 @@ import api from '../../services/api'
 export default function({ decks, onDelete, onEdit }) {
     const handleDelete = async (id) => {
         try {
-            await api.delete(`/decks/${id}`)
+            await api.delete(`/decks/${id}`, { data: { userId: 1 } })
             onDelete(id)
         } catch (err) {
             alert("Erro ao excluir Deck:" + err.message)
         }
     }
-    
     return (
         <div className="bg-gray-100 h-screen p-4 m-auto">
             <div>

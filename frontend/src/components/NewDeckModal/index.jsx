@@ -7,7 +7,7 @@ export default function NewDeckModal(props) {
 
     async function handleCreate() {
         try {
-            const response = await api.post("/decks/user/1", { name : name });
+            const response = await api.post("/decks", { name, userId: 1 });
             props.onDeckCreated(response.data);
             alert("Deck criado com sucesso");
             setName("");
@@ -41,7 +41,6 @@ export default function NewDeckModal(props) {
                     </button>
                     <button onClick={handleCreate} className="bg-orange-300 rounded-md px-3 py-1 cursor-pointer">Criar</button>
                 </div>
-                
             </div>
         </div>
     )

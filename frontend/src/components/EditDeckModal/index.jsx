@@ -7,7 +7,7 @@ export default function handleUpdate(props) {
 
     async function handleCreate() {
         try {
-            const response = await api.patch(`/decks/${props.deck.id}`, { name : name });
+            const response = await api.put(`/decks/${props.deck.id}`, { name, userId: 1 });
             props.onUpdate(response.data);
             alert("Deck atualizado com sucesso");
             props.onClose();
@@ -40,7 +40,6 @@ export default function handleUpdate(props) {
                     </button>
                     <button onClick={handleCreate} className="bg-orange-300 rounded-md px-3 py-1 cursor-pointer">Salvar</button>
                 </div>
-                
             </div>
         </div>
     )
