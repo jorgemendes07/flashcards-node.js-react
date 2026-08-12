@@ -12,7 +12,8 @@ function App() {
 
     useEffect(() => {
         const fetchDecks = async () => {
-            const response = await api.get('/decks/user/1')
+            // exibe o index do user 2
+            const response = await api.get('/decks/?userId=1');
 
             setDecks(response.data)
         }
