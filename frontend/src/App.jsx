@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import api from './services/api';
 import DeckList from './components/DeckList';
 import Banner from './components/Banner';
 import NewDeckModal from './components/NewDeckModal';
 import EditDeckModal from './components/EditDeckModal';
+import CardList from './components/CardList';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deckBeingEdited, setDeckBeingEdited] = useState(null);
   const [decks, setDecks] = useState([]);
+  const navigate = useNavigate();
 
     useEffect(() => {
         const fetchDecks = async () => {
@@ -42,15 +45,35 @@ function App() {
     }));
     setDeckBeingEdited(null);
   }
+
+  const onDeckClick = (id) => {
+    navigate(`/decks/${id}`)
+  }
   
   return (
     <div>
       <Banner onOpenModal={openModal} />
-      <DeckList 
-        decks={decks} 
-        onDelete={removeDeckFromList}
-        onEdit={setDeckBeingEdited}
-      />
+
+      <Routes>
+        <Route
+          path='/'
+          element={
+            <DeckList 
+              decks={decks} 
+              onDelete={removeDeckFromList}
+              onEdit={setDeckBeingEdited}
+              onDeckClick={onDeckClick}
+            />
+          }
+        />
+        <Route
+          path='/decks/:deckId'
+          element={
+            <CardList />
+          }
+        />
+      </Routes>
+      
 
       {isModalOpen && <NewDeckModal onClose={closeModal} onDeckCreated={addDeckToList} />}
 

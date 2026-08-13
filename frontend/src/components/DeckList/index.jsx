@@ -1,7 +1,7 @@
 import deckIcon from './../../assets/deck-icon.png'
 import api from '../../services/api'
 
-export default function({ decks, onDelete, onEdit }) {
+export default function DeckList({ decks, onDelete, onEdit, onDeckClick }) {
     const handleDelete = async (id) => {
         try {
             await api.delete(`/decks/${id}`, { data: { userId: 1 } })
@@ -18,22 +18,24 @@ export default function({ decks, onDelete, onEdit }) {
             </div>
             <div>
                 {decks.map((deck) => (
-                    <div className="flex rounded-md h-18 w-[95%] h-18 m-auto mt-3 p-3 bg-white text-gray-600 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                        <img src={deckIcon} alt="Icone de cartas de baralho"
+                    <div 
+                        key={deck.id}
+                        onClick={() => onDeckClick(deck.id)}
+                        className="flex rounded-md h-18 w-[95%] m-auto mt-3 p-3 bg-white text-gray-600 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                    >
+                        <img 
+                            src={deckIcon} 
+                            alt="Icone de cartas de baralho"
                             className='w-8 h-8 rounded-lg mr-4'
                         />
                         <div className='flex flex-1 justify-between'>
-                            <div 
-                                key={deck.id}
-                            >
-                                {deck.name}
-                            </div>
+                            <div>{deck.name}</div>
                             <div className='text-sm text-gray-400'>
                                 <i className="fa-solid fa-pen cursor-pointer mr-1 hover:text-gray-500"
-                                    onClick={() => onEdit(deck)}
+                                    onClick={(e) => { e.stopPropagation(); onEdit(deck) }}
                                 ></i>
                                 <i className="fa-solid fa-trash cursor-pointer hover:text-gray-500"
-                                    onClick={() => handleDelete(deck.id)}
+                                    onClick={(e) => {e.stopPropagation(); handleDelete(deck.id)}}
                                 ></i>
                             </div>
                         </div> 
