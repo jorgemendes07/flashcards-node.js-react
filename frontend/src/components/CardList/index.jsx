@@ -1,7 +1,23 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"
+import api from "../../services/api"
+
+
 export default function CardList() {
+    const { deckId } = useParams();
+    const [deck, setDeck] = useState(null);
+
+    useEffect(() => {
+        const fetchDeck = async () => {
+            const response = await api.get(`/decks/${deckId}?userId=1`);
+            setDeck(response.data);
+        };
+        fetchDeck();
+    }, [deckId])
+
     return (
-        <>
-        <h1>Teste</h1>
-        </>
+        <div className="bg-gray-100 h-screen p-4 m-auto">
+        <h2 className='text-xl'>{deck ? deck.name : "Carregando..."}</h2>
+        </div>
     )
 }
