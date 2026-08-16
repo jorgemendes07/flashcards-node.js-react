@@ -14,7 +14,7 @@ export default function DeckList({ decks, onDelete, onEdit, onDeckClick }) {
         <div className="bg-gray-100 h-screen p-4 m-auto">
             <div>
                 <h2 className='text-xl'>Seus Decks</h2>
-                <p className='text-sm'>Selecione um deck para começar a práticar</p>
+                <p className='text-sm'>Selecione um deck para começar a praticar</p>
             </div>
             <div>
                 {decks.map((deck) => (
