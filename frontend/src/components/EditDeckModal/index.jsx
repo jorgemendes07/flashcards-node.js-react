@@ -7,6 +7,7 @@ export default function handleUpdate(props) {
 
     async function handleCreate() {
         try {
+            // userId está hard coded. Modificar para dinâmico após implementar auth
             const response = await api.put(`/decks/${props.deck.id}`, { name, userId: 1 });
             props.onUpdate(response.data);
             alert("Deck atualizado com sucesso");

@@ -9,6 +9,7 @@ export default function CardList() {
 
     useEffect(() => {
         const fetchDeck = async () => {
+            // userId está hard coded. Modificar para dinâmico após implementar auth
             const response = await api.get(`/decks/${deckId}?userId=1`);
             setDeck(response.data);
         };

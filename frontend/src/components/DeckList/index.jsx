@@ -4,6 +4,7 @@ import api from '../../services/api'
 export default function DeckList({ decks, onDelete, onEdit, onDeckClick }) {
     const handleDelete = async (id) => {
         try {
+            // userId está hard coded. Modificar para dinâmico após implementar auth
             await api.delete(`/decks/${id}`, { data: { userId: 1 } })
             onDelete(id)
         } catch (err) {

@@ -7,6 +7,7 @@ export default function NewDeckModal(props) {
 
     async function handleCreate() {
         try {
+            // userId está hard coded. Modificar para dinâmico após implementar auth
             const response = await api.post("/decks", { name, userId: 1 });
             props.onDeckCreated(response.data);
             alert("Deck criado com sucesso");
