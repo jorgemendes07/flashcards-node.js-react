@@ -23,14 +23,6 @@ function App() {
         fetchDecks()
     }, []);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false)
-  };
-
   const addDeckToList = (newDeck) => {
     setDecks([...decks, newDeck])
   };
@@ -45,14 +37,10 @@ function App() {
     }));
     setDeckBeingEdited(null);
   }
-
-  const onDeckClick = (id) => {
-    navigate(`/decks/${id}`)
-  }
   
   return (
     <div>
-      <Banner onOpenModal={openModal} />
+      <Banner onOpenModal={() => setIsModalOpen(true)} />
 
       <Routes>
         <Route
@@ -62,7 +50,7 @@ function App() {
               decks={decks} 
               onDelete={removeDeckFromList}
               onEdit={setDeckBeingEdited}
-              onDeckClick={onDeckClick}
+              onDeckClick={(id) => navigate(`/decks/${id}`)}
             />
           }
         />
@@ -75,7 +63,7 @@ function App() {
       </Routes>
       
 
-      {isModalOpen && <NewDeckModal onClose={closeModal} onDeckCreated={addDeckToList} />}
+      {isModalOpen && <NewDeckModal onClose={() => setIsModalOpen(false)} onDeckCreated={addDeckToList} />}
 
       {deckBeingEdited && <EditDeckModal deck={deckBeingEdited} onClose={() => setDeckBeingEdited(null)} onUpdate={updateDeckInList} />}
     </div>
