@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import api from "../../services/api"
 
 
@@ -18,7 +18,20 @@ export default function CardList() {
 
     return (
         <div className="bg-gray-100 h-screen p-4 m-auto">
-        <h2 className='text-xl'>{deck ? deck.name : "Carregando..."}</h2>
+            <div className="flex justify-around">
+                <div className="flex">
+                    <Link 
+                        to="/"
+                        className="border rounded p-1 mr-3"
+                    >
+                        ← Retornar
+                    </Link>
+                    <h2 className='text-xl'>{deck ? deck.name : "Carregando..."}</h2>
+                </div>
+                
+                <button className="border rounded p-1">+ Adicionar Card</button>
+            </div>
+        
         </div>
     )
 }
