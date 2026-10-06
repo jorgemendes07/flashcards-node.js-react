@@ -40,7 +40,7 @@ export default function CardList() {
 
         <div>
             {cards.length === 0 ? (
-                <p className="m-6 text-gray-800">Nenhum card neste deck. Clique no botão  <strong>Adicionar Cards</strong> para iniciar o seu deck</p>
+                <p className="m-6 text-gray-800">Nenhum card neste deck. Clique no botão  <strong>Adicionar Card</strong> para iniciar o seu deck</p>
             ) : (
                 cards.map((card) => (
                     
