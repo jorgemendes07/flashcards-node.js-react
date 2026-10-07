@@ -37,7 +37,7 @@ function App() {
     }));
     setDeckBeingEdited(null);
   }
-  
+
   return (
     <div>
       <Banner onOpenModal={() => setIsModalOpen(true)} />
